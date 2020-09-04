@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.commen.common.file.dao.FilePathMapper">
+	<!-- 通用查询映射结果 -->
+	<resultMap id="FileMap" type="com.yjc.system.commen.common.file.entity.FilePath">
+		<id column="ID" property="id" />
+		<result column="COME_CODE" property="comeCode" />
+		<result column="URL" property="url" />
+		<result column="NAME" property="name" />
+		<result column="CREATION_USER_ID" property="creationUserId" />
+		<result column="CREATION_TIME" property="creationTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="UPDATE_USER_ID" property="updateUserId" />
+		<result column="REMARK" property="remark" />
+		<result column="IS_VALID" property="isValid" />
+	</resultMap>
+
+
+	<insert id="insert" >
+		insert into FILE_PASH(
+		<if test="FilePath.id != null and FilePath.id != ''">
+			ID
+		</if>
+		<if test="FilePath.comeCode != null and FilePath.comeCode != ''">
+		,COME_CODE
+		</if>
+		<if test="FilePath.url != null and FilePath.url != ''">
+			,URL
+		</if>
+		<if test="FilePath.name != null and FilePath.name != ''">
+			,NAME
+		</if>
+			,CREATION_USER_ID
+			,CREATION_TIME
+		<if test="FilePath.remark != null and FilePath.remark != ''">
+			,REMARK
+		</if>
+			,IS_VALID
+		) values (
+		<if test="FilePath.id != null and FilePath.id != ''">
+			#{FilePath.id}
+		</if>
+		<if test="FilePath.comeCode != null and FilePath.comeCode != ''">
+			,#{FilePath.comeCode}
+		</if>
+		<if test="FilePath.url != null and FilePath.url != ''">
+			,#{FilePath.url}
+		</if>
+		<if test="FilePath.name != null and FilePath.name != ''">
+			,#{FilePath.name}
+		</if>
+		,null
+		,sysdate
+		<if test="FilePath.remark != null and FilePath.remark != ''">
+			,#{FilePath.remark}
+		</if>
+			,0
+		)
+
+	</insert>
+
+
+</mapper>

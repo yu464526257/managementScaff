@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_MENU_MODE-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageMenuModeMapper">
+
+    <resultMap id="manageMenuModeMap" type="com.yjc.system.admin.entity.ManageMenuMode">
+        <id property="id" column="ID"/>
+        <result property="modeCode" column="MODE_CODE"/>
+        <result property="menuId" column="MENU_ID"/>
+    </resultMap>
+
+    <!--manageMenuMode简单分页查询-->
+    <select id="getManageMenuModePage" resultMap="manageMenuModeMap">
+        SELECT
+        ID,
+        MODE_CODE,
+        MENU_ID
+        FROM MANAGE_MENU_MODE
+        <where>
+            <if test="manageMenuMode.id != null and manageMenuMode.id.trim() != ''">
+                AND ID = #{manageMenuMode.id}
+            </if>
+            <if test="manageMenuMode.modeCode != null and manageMenuMode.modeCode.trim() != ''">
+                AND MODE_CODE = #{manageMenuMode.modeCode}
+            </if>
+            <if test="manageMenuMode.menuId != null and manageMenuMode.menuId.trim() != ''">
+                AND MENU_ID = #{manageMenuMode.menuId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getmenuModeBymenu" resultMap="manageMenuModeMap">
+        select
+        ID,
+        MODE_CODE,
+        MENU_ID
+        FROM MANAGE_MENU_MODE
+        where 1=1
+        <foreach collection="list" item="id" index="index" close="" separator=",">
+            and MENU_ID=#{id}
+        </foreach>
+    </select>
+
+    <select id="getmenuModeBymenuToModeCodeList" resultType="java.lang.Long">
+        select
+        MODE_CODE
+        FROM MANAGE_MENU_MODE
+        where 1=1
+        <foreach collection="list" item="id" index="index" close="" separator=",">
+            and MENU_ID=#{id}
+        </foreach>
+        group by MODE_CODE
+    </select>
+
+    <select id="getMenuList" parameterType="java.lang.String" resultType="com.yjc.system.admin.entity.ManageMenuMode">
+        SELECT
+        ID,
+        MODE_CODE,
+        MENU_ID,
+        FROM
+            MANAGE_MENU_MODE
+        <if test="menuId != null and menuId != ''">
+            MENU_ID = #{menuId}
+        </if>
+    </select>
+
+</mapper>

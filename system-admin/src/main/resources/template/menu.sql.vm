@@ -1,0 +1,13 @@
+-- 该脚本不要执行，需要完善 ID 对应关系,注意层级关系 !!!!
+
+-- 菜单SQL
+insert into `t_sys_menu` ( `menu_parent_id`, `component`, `perms`, `menu_type`, `url`, `icon`, `menu_id`, `is_visible`, `creation_time`, `position_index`, `update_time`, `menu_name`,`keep_alive`)
+    values ( '父菜单ID', 'views/${moduleName}/${pathName}/index', '', 1, '${pathName}', 'icon-caidan', '菜单ID', '0', '2019-05-05 13:17:19', '8', '2019-05-05 13:38:19', '${comments}管理',0);
+
+-- 菜单对应按钮SQL
+insert into `t_sys_menu` ( `menu_parent_id`, `component`, `perms`, `menu_type`, `url`, `icon`, `menu_id`, `is_visible`, `creation_time`, `position_index`, `update_time`, `menu_name`,`keep_alive`)
+    values ( '菜单ID', null, '${moduleName}_${pathName}_add', '2', null, '', '子按钮ID1', '0', '2019-05-05 21:35:18', '0', '2019-05-05 13:38:59', '${comments}新增',0);
+insert into `t_sys_menu` ( `menu_parent_id`, `component`, `perms`, `menu_type`, `url`, `icon`, `menu_id`, `is_visible`, `creation_time`, `position_index`, `update_time`, `menu_name`,`keep_alive`)
+    values ( '菜单ID', null, '${moduleName}_${pathName}_edit', '2', null, '', '子按钮ID2', '0', '2018-05-05 21:35:18', '1', '2019-05-05 13:38:59', '${comments}修改',0);
+insert into `t_sys_menu` ( `menu_parent_id`, `component`, `perms`, `menu_type`, `url`, `icon`, `menu_id`, `is_visible`, `creation_time`, `position_index`, `update_time`, `menu_name`,`keep_alive`)
+    values ( '菜单ID', null, '${moduleName}_${pathName}_del', '2', null, '', '子按钮ID3', '0', '2018-05-05 21:35:18', '2', '2019-05-05 13:38:59', '${comments}删除',0);

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_MODE-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageModeMapper">
+
+    <resultMap id="manageModeMap" type="com.yjc.system.admin.entity.ManageMode">
+        <id property="id" column="ID"/>
+        <result property="modeName" column="MODE_NAME"/>
+        <result property="modeCode" column="MODE_CODE"/>
+        <result property="creationUserId" column="CREATION_USER_ID"/>
+        <result property="creationTime" column="CREATION_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="updateUserId" column="UPDATE_USER_ID"/>
+        <result property="remark" column="REMARK"/>
+        <result property="isValid" column="IS_VALID"/>
+    </resultMap>
+
+    <!--manageMode简单分页查询-->
+    <select id="getManageModePage" resultMap="manageModeMap">
+        SELECT
+        ID,
+        MODE_NAME,
+        MODE_CODE,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        UPDATE_TIME,
+        UPDATE_USER_ID,
+        REMARK,
+        IS_VALID
+        FROM MANAGE_MODE
+        <where>
+            <if test="manageMode.id != null and manageMode.id.trim() != ''">
+                AND ID = #{manageMode.id}
+            </if>
+            <if test="manageMode.modeName != null and manageMode.modeName.trim() != ''">
+                AND MODE_NAME = #{manageMode.modeName}
+            </if>
+            <if test="manageMode.modeCode != null and manageMode.modeCode.trim() != ''">
+                AND MODE_CODE = #{manageMode.modeCode}
+            </if>
+            <if test="manageMode.creationUserId != null and manageMode.creationUserId.trim() != ''">
+                AND CREATION_USER_ID = #{manageMode.creationUserId}
+            </if>
+            <if test="manageMode.creationTime != null and manageMode.creationTime.trim() != ''">
+                AND CREATION_TIME = #{manageMode.creationTime}
+            </if>
+            <if test="manageMode.updateTime != null and manageMode.updateTime.trim() != ''">
+                AND UPDATE_TIME = #{manageMode.updateTime}
+            </if>
+            <if test="manageMode.updateUserId != null and manageMode.updateUserId.trim() != ''">
+                AND UPDATE_USER_ID = #{manageMode.updateUserId}
+            </if>
+            <if test="manageMode.remark != null and manageMode.remark.trim() != ''">
+                AND REMARK = #{manageMode.remark}
+            </if>
+            <if test="manageMode.isValid != null and manageMode.isValid.trim() != ''">
+                AND IS_VALID = #{manageMode.isValid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getModeList" resultType="com.yjc.system.admin.entity.ManageMode">
+        SELECT * FROM MANAGE_MODE  WHERE  IS_VALID = '0'
+    </select>
+
+    <insert id="addManageMode" parameterType="com.yjc.system.admin.entity.ManageMode">
+        INSERT INTO MANAGE_MODE(
+        <if test="manageMode.id!=null and manageMode.id!=''">
+            ID,
+        </if>
+        <if test="manageMode.modeName!=null and manageMode.modeName!=''">
+            MODE_NAME,
+        </if>
+        <if test="manageMode.modeCode!=null and manageMode.modeCode!=''">
+            MODE_CODE,
+        </if>
+        <if test="manageMode.creationUserId!=null and manageMode.creationUserId!=''">
+            CREATION_USER_ID,
+        </if>
+        CREATION_TIME,
+        <if test="manageMode.isValid!=null and manageMode.isValid!=''">
+            REMARK,
+        </if>
+        IS_VALID
+        ) VALUES(
+        <if test="manageMode.id!=null and manageMode.id!=''">
+            #{manageMode.id},
+        </if>
+        <if test="manageMode.modeName!=null and manageMode.modeName!=''">
+            #{manageMode.modeName},
+        </if>
+        <if test="manageMode.modeCode!=null and manageMode.modeCode!=''">
+            #{manageMode.modeCode},
+        </if>
+        <if test="manageMode.creationUserId!=null and manageMode.creationUserId!=''">
+            #{manageMode.creationUserId},
+        </if>
+        SYSDATE,
+        <if test="manageMode.remark!=null and manageMode.remark!=''">
+            #{manageMode.remark},
+        </if>
+        0
+        )
+    </insert>
+
+</mapper>

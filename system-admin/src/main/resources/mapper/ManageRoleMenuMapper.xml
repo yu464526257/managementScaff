@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_ROLE_MENU-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageRoleMenuMapper">
+
+  <resultMap id="manageRoleMenuMap" type="com.yjc.system.admin.entity.ManageRoleMenu">
+        <id property="url" column="URL"/>
+        <result property="roleId" column="ROLE_ID"/>
+        <result property="roleName" column="ROLE_NAME"/>
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuId" column="MENU_ID"/>
+  </resultMap>
+
+  <!--manageRoleMenu简单分页查询-->
+  <select id="getManageRoleMenuPage" resultMap="manageRoleMenuMap">
+    SELECT
+        URL,
+        ROLE_ID,
+        ROLE_NAME,
+        MENU_NAME,
+        MENU_ID
+    FROM MANAGE_ROLE_MENU
+    <where>
+        <if test="manageRoleMenu.url != null and manageRoleMenu.url.trim() != ''">
+          AND URL = #{manageRoleMenu.url}
+        </if>
+        <if test="manageRoleMenu.roleId != null and manageRoleMenu.roleId.trim() != ''">
+          AND ROLE_ID = #{manageRoleMenu.roleId}
+        </if>
+        <if test="manageRoleMenu.roleName != null and manageRoleMenu.roleName.trim() != ''">
+          AND ROLE_NAME = #{manageRoleMenu.roleName}
+        </if>
+        <if test="manageRoleMenu.menuName != null and manageRoleMenu.menuName.trim() != ''">
+          AND MENU_NAME = #{manageRoleMenu.menuName}
+        </if>
+        <if test="manageRoleMenu.menuId != null and manageRoleMenu.menuId.trim() != ''">
+          AND MENU_ID = #{manageRoleMenu.menuId}
+        </if>
+    </where>
+  </select>
+
+    <!--  根据id修改  -->
+    <update id="modify">
+        update MANAGE_ROLE_MENU
+        set
+        <trim suffixOverrides=",">
+            <if test="manageRoleMenu.roleName != null and manageRoleMenu.roleName != ''">
+                ROLE_NAME = #{manageRoleMenu.roleName},
+            </if>
+            <if test="manageRoleMenu.menuName != null and manageRoleMenu.menuName != ''">
+                MENU_NAME = #{manageRoleMenu.menuName},
+            </if>
+            <if test="manageRoleMenu.menuId != null and manageRoleMenu.menuId != ''">
+                MENU_ID = #{manageRoleMenu.menuId},
+            </if>
+            <if test="manageRoleMenu.url != null and manageRoleMenu.url != ''">
+                URL = #{manageRoleMenu.url},
+            </if>
+        </trim>
+        where ROLE_ID = #{manageRoleMenu.roleId}
+    </update>
+    <select id="getRoleMenusByRole" resultMap="manageRoleMenuMap">
+            SELECT
+        URL,
+        ROLE_ID,
+        ROLE_NAME,
+        MENU_NAME,
+        MENU_ID
+    FROM MANAGE_ROLE_MENU
+    where
+        1=1
+      <foreach collection="roles" item="roleId" index="index" close=""  separator=",">
+          and ROLE_ID=#{roleId}
+      </foreach>
+    </select>
+
+    <!--  根据角色id和菜单id删除  -->
+    <delete id="remove">
+        delete from MANAGE_ROLE_MENU where ROLE_ID = #{roleId} and MENU_ID=#{menuId}
+    </delete>
+    <!--根据角色编号查询关联菜单信息-->
+    <select id="getRoleMenuList" resultType="com.yjc.system.admin.entity.ManageRoleMenu">
+        SELECT * FROM MANAGE_ROLE_MENU WHERE ROLE_ID=#{roleId}
+    </select>
+    <!--根据菜单编号查询菜单信息-->
+    <select id="getRoleMenuListByMenuId" resultType="com.yjc.system.admin.entity.ManageRoleMenu">
+        SELECT * FROM MANAGE_ROLE_MENU WHERE MENU_ID=#{menuId}
+    </select>
+
+    <!--Oracle=======根据角色id查询角色菜单-->
+    <select id="getMenuDtoByRoles" resultType="com.yjc.system.admin.dto.RoleMenuDto">
+        SELECT
+        ROLE_ID,
+        ROLE_NAME,
+        MENU_NAME,
+        MENU_ID,
+        URL,
+        MENU_TYPE,
+        MENU_PARENT_ID,
+        POSITION_INDEX,
+        ICON,
+        MENU_ARRAY,
+        REMARK
+        FROM
+        (
+        SELECT
+        r.ROLE_ID,
+        r.ROLE_NAME,
+        r.MENU_NAME,
+        r.MENU_ID,
+        r.URL,
+        m.MENU_TYPE,
+        m.MENU_PARENT_ID,
+        m.POSITION_INDEX,
+        m.ICON,
+        m.MENU_ARRAY,
+        m.REMARK,
+        row_number ( ) over ( partition BY r.MENU_NAME ORDER BY r.MENU_ID DESC ) rn
+        FROM
+        MANAGE_ROLE_MENU r
+        INNER JOIN MANAGE_MENU m ON r.MENU_ID = m.MENU_ID
+        WHERE 1=1
+        <if test="roles != null and roles.size > 0">
+            AND r.ROLE_ID IN
+            <foreach item="roleId" index="index" collection="roles" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+        </if>
+        ORDER BY POSITION_INDEX
+        )
+        WHERE
+        rn =1
+    </select>
+
+    <!--mysql根据角色列表查询菜单集合去重-->
+<!--    <select id="getMenuDtoByRoles" resultType="com.yjc.system.admin.dto.RoleMenuDto">-->
+<!--        SELECT-->
+<!--            f.MENU_ID,-->
+<!--            m.MENU_NAME,-->
+<!--            m.MENU_PARENT_ID,-->
+<!--            m.POSITION_INDEX,-->
+<!--            m.URL,-->
+<!--            m.MENU_TYPE,-->
+<!--            m.ICON-->
+<!--        FROM-->
+<!--            (-->
+<!--                SELECT MENU_ID FROM MANAGE_ROLE_MENU AS a-->
+<!--                WHERE 1=1-->
+<!--                <if test="roles != null and roles.size > 0">-->
+<!--                    AND r.ROLE_ID IN-->
+<!--                    <foreach item="roleId" index="index" collection="roles" open="(" separator="," close=")">-->
+<!--                        #{roleId}-->
+<!--                    </foreach>-->
+<!--                </if>-->
+<!--                GROUP BY MENU_ID-->
+<!--            ) AS f-->
+<!--            INNER JOIN MANAGE_MENU AS m-->
+<!--            ON f.MENU_ID = m.MENU_ID-->
+<!--        WHERE IS_VISIBLE=0-->
+<!--        ORDER BY POSITION_INDEX-->
+<!--    </select>-->
+    <!--Oracle  根据单个角色编号查询对应菜单列表-->
+    <select id="getMenuDtoByRoleId" resultType="com.yjc.system.admin.dto.RoleMenuDto">
+        SELECT
+        ROLE_ID,
+        ROLE_NAME,
+        MENU_NAME,
+        MENU_ID,
+        URL,
+        MENU_TYPE,
+        MENU_PARENT_ID,
+        POSITION_INDEX,
+        ICON,
+        MENU_ARRAY,
+        REMARK
+        FROM
+        (
+        SELECT
+        r.ROLE_ID,
+        r.ROLE_NAME,
+        r.MENU_NAME,
+        r.MENU_ID,
+        r.URL,
+        m.MENU_TYPE,
+        m.MENU_PARENT_ID,
+        m.POSITION_INDEX,
+        m.ICON,
+        m.MENU_ARRAY,
+        m.REMARK,
+        row_number ( ) over ( partition BY r.MENU_NAME ORDER BY r.MENU_ID DESC ) rn
+        FROM
+        MANAGE_ROLE_MENU r
+        INNER JOIN MANAGE_MENU m ON r.MENU_ID = m.MENU_ID
+        WHERE 1=1
+        <if test="roleId!=null and roleId!=''">
+            AND r.ROLE_ID =#{roleId}
+        </if>
+        ORDER BY POSITION_INDEX
+        )
+        WHERE
+        rn =1
+    </select>
+    <!--mysql  根据单个角色编号查询对应菜单列表 -->
+<!--    <select id="getMenuDtoByRoleId" resultType="com.yjc.system.admin.dto.RoleMenuDto">-->
+<!--        SELECT-->
+<!--            f.MENU_ID,-->
+<!--            m.MENU_NAME,-->
+<!--            m.MENU_PARENT_ID,-->
+<!--            m.POSITION_INDEX,-->
+<!--            m.URL,-->
+<!--            m.MENU_TYPE,-->
+<!--            m.ICON-->
+<!--        FROM-->
+<!--            ( SELECT MENU_ID FROM MANAGE_ROLE_MENU AS a WHERE ROLE_ID =#{roleId} GROUP BY MENU_ID ) AS f-->
+<!--            INNER JOIN MANAGE_MENU AS m ON f.MENU_ID = m.MENU_ID-->
+<!--            WHERE IS_VISIBLE=0-->
+<!--            ORDER BY POSITION_INDEX-->
+<!--    </select>-->
+
+    <!--根据菜单编号修改角色菜单表的菜单信息-->
+    <update id="updateRoleMenuByMenuId" parameterType="com.yjc.system.admin.entity.ManageRoleMenu">
+         UPDATE MANAGE_ROLE_MENU SET
+         <trim>
+         <if test="manageRoleMenu.menuName!=null and manageRoleMenu.menuName!=''">
+             MENU_NAME=#{manageRoleMenu.menuName},
+         </if>
+         <if test="manageRoleMenu.url!=null and manageRoleMenu.url!=''">
+             URL=#{manageRoleMenu.url}
+         </if>
+         </trim>
+          WHERE MENU_ID=#{manageRoleMenu.menuId}
+    </update>
+
+</mapper>

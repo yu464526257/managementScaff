@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_MENU-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageMenuMapper">
+
+  <resultMap id="manageMenuMap" type="com.yjc.system.admin.entity.ManageMenu">
+        <id property="menuName" column="MENU_NAME"/>
+        <result property="menuId" column="MENU_ID"/>
+        <result property="menuParentId" column="MENU_PARENT_ID"/>
+        <result property="positionIndex" column="POSITION_INDEX"/>
+        <result property="url" column="URL"/>
+        <result property="menuType" column="MENU_TYPE"/>
+        <result property="isVisible" column="IS_VISIBLE"/>
+        <result property="perms" column="PERMS"/>
+        <result property="icon" column="ICON"/>
+        <result property="component" column="COMPONENT"/>
+        <result property="keepAlive" column="KEEP_ALIVE"/>
+        <result property="creationUserId" column="CREATION_USER_ID"/>
+        <result property="creationTime" column="CREATION_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="updateUserId" column="UPDATE_USER_ID"/>
+        <result property="remark" column="REMARK"/>
+        <result property="menuArray" column="MENU_ARRAY"/>
+        <result property="isValid" column="IS_VALID"/>
+  </resultMap>
+
+  <!--manageMenu简单分页查询-->
+  <select id="getManageMenuPage" resultMap="manageMenuMap">
+    SELECT
+        MENU_NAME,
+        MENU_ID,
+        MENU_PARENT_ID,
+        POSITION_INDEX,
+        URL,
+        MENU_TYPE,
+        IS_VISIBLE,
+        PERMS,
+        ICON,
+        COMPONENT,
+        KEEP_ALIVE,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        UPDATE_TIME,
+        UPDATE_USER_ID,
+        REMARK,
+         MENU_ARRAY,
+        IS_VALID
+    FROM MANAGE_MENU
+    <where>
+        <if test="manageMenu.menuName != null and manageMenu.menuName.trim() != ''">
+          AND MENU_NAME = #{manageMenu.menuName}
+        </if>
+        <if test="manageMenu.menuId != null and manageMenu.menuId.trim() != ''">
+          AND MENU_ID = #{manageMenu.menuId}
+        </if>
+        <if test="manageMenu.menuParentId != null and manageMenu.menuParentId.trim() != ''">
+          AND MENU_PARENT_ID = #{manageMenu.menuParentId}
+        </if>
+        <if test="manageMenu.positionIndex != null and manageMenu.positionIndex.trim() != ''">
+          AND POSITION_INDEX = #{manageMenu.positionIndex}
+        </if>
+        <if test="manageMenu.url != null and manageMenu.url.trim() != ''">
+          AND URL = #{manageMenu.url}
+        </if>
+        <if test="manageMenu.menuType != null and manageMenu.menuType.trim() != ''">
+          AND MENU_TYPE = #{manageMenu.menuType}
+        </if>
+        <if test="manageMenu.isVisible != null and manageMenu.isVisible.trim() != ''">
+          AND IS_VISIBLE = #{manageMenu.isVisible}
+        </if>
+        <if test="manageMenu.perms != null and manageMenu.perms.trim() != ''">
+          AND PERMS = #{manageMenu.perms}
+        </if>
+        <if test="manageMenu.icon != null and manageMenu.icon.trim() != ''">
+          AND ICON = #{manageMenu.icon}
+        </if>
+        <if test="manageMenu.component != null and manageMenu.component.trim() != ''">
+          AND COMPONENT = #{manageMenu.component}
+        </if>
+        <if test="manageMenu.keepAlive != null and manageMenu.keepAlive.trim() != ''">
+          AND KEEP_ALIVE = #{manageMenu.keepAlive}
+        </if>
+        <if test="manageMenu.creationUserId != null and manageMenu.creationUserId.trim() != ''">
+          AND CREATION_USER_ID = #{manageMenu.creationUserId}
+        </if>
+        <if test="manageMenu.creationTime != null and manageMenu.creationTime.trim() != ''">
+          AND CREATION_TIME = #{manageMenu.creationTime}
+        </if>
+        <if test="manageMenu.updateTime != null and manageMenu.updateTime.trim() != ''">
+          AND UPDATE_TIME = #{manageMenu.updateTime}
+        </if>
+        <if test="manageMenu.updateUserId != null and manageMenu.updateUserId.trim() != ''">
+          AND UPDATE_USER_ID = #{manageMenu.updateUserId}
+        </if>
+        <if test="manageMenu.remark != null and manageMenu.remark.trim() != ''">
+          AND REMARK = #{manageMenu.remark}
+        </if>
+        <if test="manageMenu.isValid != null and manageMenu.isValid.trim() != ''">
+          AND IS_VALID = #{manageMenu.isValid}
+        </if>
+    </where>
+  </select>
+    <!--根据菜单编号查询菜单信息-->
+   <select id="getManageMenuByMenuId" resultMap="manageMenuMap">
+        select * from MANAGE_MENU where MENU_ID=#{menuId} AND IS_VALID=0
+   </select>
+
+
+
+    <select id="getMenuList"  resultType="com.yjc.system.admin.dto.RoleMenuDto">
+        SELECT
+            MENU_NAME,
+            MENU_ID,
+            MENU_PARENT_ID,
+            POSITION_INDEX,
+            URL,
+            MENU_TYPE,
+            ICON,
+            MENU_ARRAY,
+            REMARK
+        FROM
+            MANAGE_MENU
+        WHERE
+            1 = 1
+            AND IS_VALID = 0
+        ORDER BY
+            POSITION_INDEX
+    </select>
+    <!--新增菜单-->
+    <insert id="addManageMenu" parameterType="com.yjc.system.admin.entity.ManageMenu">
+        INSERT INTO MANAGE_MENU (
+            <if test="manageMenu.menuName!=null and manageMenu.menuName!=''">
+                MENU_NAME,
+            </if>
+            <if test="manageMenu.menuId!=null and manageMenu.menuId!=''">
+                MENU_ID,
+            </if>
+            <if test="manageMenu.menuParentId!=null and manageMenu.menuParentId!=''">
+                MENU_PARENT_ID,
+            </if>
+            <if test="manageMenu.positionIndex!=null and manageMenu.positionIndex!=''">
+                POSITION_INDEX,
+            </if>
+            <if test="manageMenu.url!=null and manageMenu.url!=''">
+                URL,
+            </if>
+            <if test="manageMenu.menuType!=null and manageMenu.menuType!=''">
+                MENU_TYPE,
+            </if>
+                IS_VISIBLE,
+            <if test="manageMenu.perms!=null and manageMenu.perms!=''">
+                PERMS,
+            </if>
+            <if test="manageMenu.icon!=null and manageMenu.icon!=''">
+                ICON,
+            </if>
+            <if test="manageMenu.component!=null and manageMenu.component!=''">
+                COMPONENT,
+            </if>
+            <if test="manageMenu.keepAlive!=null and manageMenu.keepAlive!=''">
+                KEEP_ALIVE,
+            </if>
+            <if test="manageMenu.creationUserId!=null and manageMenu.creationUserId!=''">
+                CREATION_USER_ID,
+            </if>
+                CREATION_TIME,
+            <if test="manageMenu.remark!=null and manageMenu.remark!=''">
+                REMARK,
+            </if>
+            <if test="manageMenu.menuArray!=null and manageMenu.menuArray!=''">
+                MENU_ARRAY,
+            </if>
+
+                IS_VALID
+        )
+        VALUES
+           (
+                <if test="manageMenu.menuName!=null and manageMenu.menuName!=''">
+                    #{manageMenu.menuName},
+                </if>
+                <if test="manageMenu.menuId!=null and manageMenu.menuId!=''">
+                    #{manageMenu.menuId},
+                </if>
+                <if test="manageMenu.menuParentId!=null and manageMenu.menuParentId!=''">
+                    #{manageMenu.menuParentId},
+                </if>
+                <if test="manageMenu.positionIndex!=null and manageMenu.positionIndex!=''">
+                    #{manageMenu.positionIndex},
+                </if>
+                <if test="manageMenu.url!=null and manageMenu.url!=''">
+                    #{manageMenu.url},
+                </if>
+                <if test="manageMenu.menuType!=null and manageMenu.menuType!=''">
+                    #{manageMenu.menuType},
+                </if>
+                    0,
+                <if test="manageMenu.perms!=null and manageMenu.perms!=''">
+                    #{manageMenu.perms},
+                </if>
+                <if test="manageMenu.icon!=null and manageMenu.icon!=''">
+                   #{manageMenu.icon},
+                </if>
+                <if test="manageMenu.component!=null and manageMenu.component!=''">
+                    #{manageMenu.component},
+                </if>
+                <if test="manageMenu.keepAlive!=null and manageMenu.keepAlive!=''">
+                    #{manageMenu.keepAlive},
+                </if>
+                <if test="manageMenu.creationUserId!=null and manageMenu.creationUserId!=''">
+                    #{manageMenu.creationUserId},
+                </if>
+                SYSDATE, -- oracle写法
+--                     now(),
+                <if test="manageMenu.remark!=null and manageMenu.remark!=''">
+                   #{manageMenu.remark},
+                </if>
+                <if test="manageMenu.menuArray!=null and manageMenu.menuArray!=''">
+                    #{manageMenu.menuArray},
+                </if>
+                0
+            )
+
+    </insert>
+    <!--修改菜单-->
+    <update id="updateManageMenu" parameterType="com.yjc.system.admin.entity.ManageMenu">
+        UPDATE MANAGE_MENU
+	SET
+	<trim>
+        <if test="manageMenu.menuName!=null and manageMenu.menuName!=''">
+            MENU_NAME = #{manageMenu.menuName},
+        </if>
+        <if test="manageMenu.menuParentId!=null and manageMenu.menuParentId!=''">
+            MENU_PARENT_ID = #{manageMenu.menuParentId},
+        </if>
+        <if test="manageMenu.positionIndex!=null and manageMenu.positionIndex!=''">
+            POSITION_INDEX =#{manageMenu.positionIndex},
+        </if>
+        <if test="manageMenu.url!=null and manageMenu.url!=''">
+            URL = #{manageMenu.url},
+        </if>
+        <if test="manageMenu.menuType!=null and manageMenu.menuType!=''">
+            MENU_TYPE =#{manageMenu.menuType},
+        </if>
+        <if test="manageMenu.isVisible!=null and manageMenu.isVisible!=''">
+            IS_VISIBLE =#{manageMenu.isVisible},
+        </if>
+        <if test="manageMenu.perms!=null and manageMenu.perms!=''">
+            PERMS =#{manageMenu.perms},
+        </if>
+        <if test="manageMenu.icon!=null and manageMenu.icon!=''">
+            ICON =#{manageMenu.icon},
+        </if>
+        <if test="manageMenu.component!=null and manageMenu.component!=''">
+            COMPONENT =#{manageMenu.component},
+        </if>
+        <if test="manageMenu.keepAlive!=null and manageMenu.keepAlive!=''">
+            KEEP_ALIVE =#{manageMenu.keepAlive},
+        </if>
+           UPDATE_TIME = SYSDATE,-- oracle写法
+--                 UPDATE_TIME = now(),
+        <if test="manageMenu.updateUserId!=null and manageMenu.updateUserId!=''">
+            UPDATE_USER_ID =#{manageMenu.updateUserId},
+        </if>
+        <if test="manageMenu.remark!=null and manageMenu.remark!=''">
+            REMARK =#{manageMenu.remark},
+        </if>
+        <if test="manageMenu.menuArray!=null and manageMenu.menuArray!=''">
+            MENU_ARRAY =#{manageMenu.menuArray},
+        </if>
+        IS_VALID = 0
+    </trim>
+	WHERE
+	MENU_ID = #{manageMenu.menuId}
+    </update>
+    <!--删除菜单-->
+    <update id="deleteManageMenu">
+        UPDATE MANAGE_MENU SET
+        <trim>
+        IS_VALID=1 ,
+        <if test="updateUserId!=null and updateUserId!=''">
+            UPDATE_USER_ID=#{updateUserId},
+        </if>
+         UPDATE_TIME=SYSDATE --oracle写法
+--             UPDATE_TIME=now()
+        </trim>
+        where MENU_ID=#{menuId}
+    </update>
+
+    <select id="getMaxMenuId" resultType="java.lang.Long">
+        SELECT MAX(MENU_ID) FROM MANAGE_MENU
+    </select>
+
+</mapper>

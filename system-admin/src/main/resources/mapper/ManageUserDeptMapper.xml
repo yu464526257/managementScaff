@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_USER_DEPT-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageUserDeptMapper">
+
+  <resultMap id="manageUserDeptMap" type="com.yjc.system.admin.entity.ManageUserDept">
+        <id property="id" column="ID"/>
+        <result property="userNo" column="USER_NO"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="deptId" column="DEPT_ID"/>
+        <result property="deptNo" column="DEPT_NO"/>
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="isMajor" column="IS_MAJOR"/>
+  </resultMap>
+
+  <!--manageUserDept简单分页查询-->
+  <select id="getManageUserDeptPage" resultMap="manageUserDeptMap">
+    SELECT
+        ID,
+        USER_NO,
+        USER_ID,
+        DEPT_ID,
+        DEPT_NO,
+        DEPT_NAME,
+      IS_MAJOR,
+    FROM MANAGE_USER_DEPT
+    <where>
+        <if test="manageUserDept.id != null and manageUserDept.id.trim() != ''">
+          AND ID = #{manageUserDept.id}
+        </if>
+        <if test="manageUserDept.userNo != null and manageUserDept.userNo.trim() != ''">
+          AND USER_NO = #{manageUserDept.userNo}
+        </if>
+        <if test="manageUserDept.userId != null and manageUserDept.userId.trim() != ''">
+          AND USER_ID = #{manageUserDept.userId}
+        </if>
+        <if test="manageUserDept.deptId != null and manageUserDept.deptId.trim() != ''">
+          AND DEPT_ID = #{manageUserDept.deptId}
+        </if>
+        <if test="manageUserDept.deptNo != null and manageUserDept.deptNo.trim() != ''">
+          AND DEPT_NO = #{manageUserDept.deptNo}
+        </if>
+        <if test="manageUserDept.deptName != null and manageUserDept.deptName.trim() != ''">
+          AND DEPT_NAME = #{manageUserDept.deptName}
+        </if>
+    </where>
+  </select>
+
+
+
+</mapper>

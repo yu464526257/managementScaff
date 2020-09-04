@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--SYS_CODE-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.SysCodeMapper">
+
+  <resultMap id="sysCodeMap" type="com.yjc.system.admin.entity.SysCode">
+        <id property="id" column="ID"/>
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="type" column="TYPE"/>
+  </resultMap>
+
+  <!--sysCode简单分页查询-->
+  <select id="getSysCodePage" resultMap="sysCodeMap">
+    SELECT
+        ID,
+        CODE,
+        NAME,
+        TYPE
+    FROM SYS_CODE
+    <where>
+        <if test="sysCode.id != null and sysCode.id.trim() != ''">
+          AND ID = #{sysCode.id}
+        </if>
+        <if test="sysCode.code != null and sysCode.code.trim() != ''">
+          AND CODE = #{sysCode.code}
+        </if>
+        <if test="sysCode.name != null and sysCode.name.trim() != ''">
+          AND NAME = #{sysCode.name}
+        </if>
+        <if test="sysCode.type != null and sysCode.type.trim() != ''">
+          AND TYPE = #{sysCode.type}
+        </if>
+    </where>
+  </select>
+
+    <select id="getSequenceIdNextVal" resultType="java.lang.Integer">
+        select sequence_id.nextval from dual
+    </select>
+
+
+
+</mapper>

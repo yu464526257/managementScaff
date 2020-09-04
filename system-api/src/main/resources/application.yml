@@ -1,0 +1,103 @@
+
+server:
+  port: 8095
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@106.54.14.206:1521/orcl
+    username: logistics
+    password: logistics
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+
+  #  datasource:
+  #    driver-class-name: com.mysql.jdbc.Driver
+  #    url: jdbc:mysql://121.40.155.75:3306/LOGISTICS?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+  #    username: hyrj
+  #    password: hyrj2019
+  application:
+    name: system-admin-service
+  security:
+    user:
+      name: admin
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  #redis ????
+  redis:
+    database: 2
+    host: 121.40.155.75
+    # Redis????????????
+    port: 6378
+    # Redis?????????????????????
+    password: hao.0917
+    # ?????????????
+    timeout: 300ms
+    lettuce:
+      pool:
+        # ????????????????????????????????
+        max-active: 8
+        # ??????§Ö???????????
+        max-idle: 10
+        # ??????§Ö???§³????????
+        min-idle: 8
+        # ??????????????????????????????????
+        max-wait: -1ms
+
+# datasource:
+#  url: jdbc:oracle:thin:@106.54.14.206:1521/orcl
+#  username: fgzspt
+#  password: fgzspt
+#  driver-class-name: oracle.jdbc.driver.OracleDriver
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+  type-aliases-package: com.yidi.system.admin.entity
+  global-config:
+    db-config:
+      id-type: uuid
+      field-strategy: NOT_EMPTY
+      table-prefix: LOGISTICS
+      db-type: oracle
+  configuration:
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+file:
+  #  path: E:/work/svnWorkPace/javaNew/target/classes/file
+  path: /IMG/2020-06-21/
+
+
+system:
+  service:
+    code: 1
+  edition:
+    code: v1.0.0
+
+logging:
+  config: classpath:logback_yidi.xml
+  level:
+    io.swagger.models.parameters.AbstractSerializableParameter: error
+
+
+remoteServer:
+  url: 121.40.155.75
+  username: root
+  password: Lu.@0917
+  path: /IMG/2020-06-21/
+  #????????????§³
+  upload_maxsize: 20971520
+
+base:
+  encrypt:
+    inputEncrypt: false
+    outputEncrypt: false
+    # ????????????????16¦Ë
+    key: 'yidigs@2020_best'
+
+
+

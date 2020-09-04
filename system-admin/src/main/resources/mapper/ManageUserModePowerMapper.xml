@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_USER_MODE_POWER-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageUserModePowerMapper">
+
+  <resultMap id="manageUserModePowerMap" type="com.yjc.system.admin.entity.ManageUserModePower">
+        <id property="userId" column="USER_ID"/>
+        <result property="userNo" column="USER_NO"/>
+        <result property="modeCode" column="MODE_CODE"/>
+        <result property="modeName" column="MODE_NAME"/>
+        <result property="isValid" column="IS_VALID"/>
+        <result property="creationUserId" column="CREATION_USER_ID"/>
+        <result property="creationTime" column="CREATION_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="updateUserId" column="UPDATE_USER_ID"/>
+        <result property="remark" column="REMARK"/>
+        <result property="powerCode" column="POWER_CODE"/>
+        <result property="powerName" column="POWER_NAME"/>
+        <result property="havaDatapower" column="HAVA_DATAPOWER"/>
+  </resultMap>
+
+  <!--manageUserModePower简单分页查询-->
+  <select id="getManageUserModePowerPage" resultMap="manageUserModePowerMap">
+    SELECT
+        USER_ID,
+      USER_NO,
+        MODE_CODE,
+        MODE_NAME,
+        IS_VALID,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        UPDATE_TIME,
+        UPDATE_USER_ID,
+        REMARK,
+        POWER_CODE,
+        POWER_NAME,
+      HAVA_DATAPOWER
+    FROM MANAGE_USER_MODE_POWER
+    <where>
+        <if test="manageUserModePower.userId != null and manageUserModePower.userId.trim() != ''">
+          AND USER_ID = #{manageUserModePower.userId}
+        </if>
+        <if test="manageUserModePower.userNo != null and manageUserModePower.userNo.trim() != ''">
+          AND USER_NO = #{manageUserModePower.userNo}
+        </if>
+        <if test="manageUserModePower.modeCode != null and manageUserModePower.modeCode.trim() != ''">
+          AND MODE_CODE = #{manageUserModePower.modeCode}
+        </if>
+        <if test="manageUserModePower.modeName != null and manageUserModePower.modeName.trim() != ''">
+          AND MODE_NAME = #{manageUserModePower.modeName}
+        </if>
+        <if test="manageUserModePower.isValid != null and manageUserModePower.isValid.trim() != ''">
+          AND IS_VALID = #{manageUserModePower.isValid}
+        </if>
+        <if test="manageUserModePower.creationUserId != null and manageUserModePower.creationUserId.trim() != ''">
+          AND CREATION_USER_ID = #{manageUserModePower.creationUserId}
+        </if>
+        <if test="manageUserModePower.creationTime != null and manageUserModePower.creationTime.trim() != ''">
+          AND CREATION_TIME = #{manageUserModePower.creationTime}
+        </if>
+        <if test="manageUserModePower.updateTime != null and manageUserModePower.updateTime.trim() != ''">
+          AND UPDATE_TIME = #{manageUserModePower.updateTime}
+        </if>
+        <if test="manageUserModePower.updateUserId != null and manageUserModePower.updateUserId.trim() != ''">
+          AND UPDATE_USER_ID = #{manageUserModePower.updateUserId}
+        </if>
+        <if test="manageUserModePower.remark != null and manageUserModePower.remark.trim() != ''">
+          AND REMARK = #{manageUserModePower.remark}
+        </if>
+        <if test="manageUserModePower.powerCode != null and manageUserModePower.powerCode.trim() != ''">
+          AND POWER_CODE = #{manageUserModePower.powerCode}
+        </if>
+        <if test="manageUserModePower.powerName != null and manageUserModePower.powerName.trim() != ''">
+          AND POWER_NAME = #{manageUserModePower.powerName}
+        </if>
+    </where>
+  </select>
+
+    <update id="delModePower">
+        update MANAGE_USER_MODE_POWER set IS_VALID=1  where 1=1
+            AND USER_ID = #{user.userId}
+            AND USER_NO = #{user.userNo}
+
+    </update>
+
+    <select id="getManageModeUserList" resultType="com.yjc.system.admin.entity.ManageUserModePower">
+        SELECT * FROM MANAGE_USER_MODE_POWER WHERE IS_VALID = '0' AND 1=1
+        <if test="userId != null and userId != ''">
+            AND USER_ID = #{userId}
+        </if>
+    </select>
+
+    <update id="delManageModeUser" parameterType="java.lang.String">
+    UPDATE MANAGE_USER_MODE_POWER SET IS_VALID = '1' WHERE USER_ID = #{userId} AND MODE_CODE = #{modeCode} AND POWER_CODE = #{powerCode}
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,88 @@
+package ${package}.${moduleName}.controller;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.service.${className}Service;
+import com.yjc.system.admin.dto.base.ResultEntity;
+import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@AllArgsConstructor
+@RequestMapping("/${pathName}")
+public class ${className}Controller {
+
+  private final  ${className}Service ${classname}Service;
+
+  /**
+   * 简单分页查询
+   * @param page 分页对象
+   * @param ${classname} ${comments}
+   * @return
+   */
+  @PostMapping("/page")
+  @ResponseBody
+  @ApiOperation("简单分页查询")
+  public ResultEntity<IPage<${className}>> get${className}Page(Page<${className}> page,@RequestBody  ${className} ${classname}) {
+    return  ResultEntity.ok(${classname}Service.get${className}Page(page,${classname}));
+  }
+
+
+  /**
+   * 通过id查询单条记录
+   * @param ${pk.lowerAttrName}
+   * @return ResultEntity
+   */
+  @PostMapping("/getById")
+  @ResponseBody
+  @ApiOperation("通过id查询单条记录")
+  public ResultEntity<${className}> getById(@RequestBody  ${className} ${classname}){
+    return ResultEntity.ok(${classname}Service.getById(${pk.lowerAttrName}));
+  }
+
+  /**
+   * 新增记录
+   * @param ${classname}
+   * @return ResultEntity
+   */
+  @PostMapping("/save")
+  @ResponseBody
+  @ApiOperation("新增记录")
+  public ResultEntity save(@RequestBody ${className} ${classname}){
+    return ResultEntity.ok(${classname}Service.insert(${classname}));
+  }
+
+  /**
+   * 修改记录
+   * @param ${classname}
+   * @return ResultEntity
+   */
+  @PostMapping("/update")
+  @ResponseBody
+  @ApiOperation("修改记录")
+  public ResultEntity update(@RequestBody ${className} ${classname}){
+    return ResultEntity.ok(${classname}Service.updateById(${classname}));
+  }
+
+  /**
+   * 通过id删除一条记录
+   * @param ${pk.lowerAttrName}
+   * @return R
+   */
+  @PostMapping("/del${className}byId")
+  @ResponseBody
+  @ApiOperation("通过id删除一条记录")
+  public ResultEntity removeById(${className} ${classname}){
+    return ${classname}Service.delete${className}(${classname});
+  }
+
+}

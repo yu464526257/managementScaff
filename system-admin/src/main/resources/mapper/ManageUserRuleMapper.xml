@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_USER_RULE-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageUserRuleMapper">
+
+  <resultMap id="manageUserRuleMap" type="com.yjc.system.admin.entity.ManageUserRule">
+        <id property="userId" column="USER_ID"/>
+        <result property="userNo" column="USER_NO"/>
+        <result property="userLoginNo" column="USER_LOGIN_NO"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="roleId" column="ROLE_ID"/>
+        <result property="roleName" column="ROLE_NAME"/>
+  </resultMap>
+
+  <!--manageUserRule简单分页查询-->
+  <select id="getManageUserRulePage" resultMap="manageUserRuleMap">
+    SELECT
+        USER_ID,
+        USER_NO,
+        USER_LOGIN_NO,
+        USER_NAME,
+        ROLE_ID,
+        ROLE_NAME
+    FROM MANAGE_USER_RULE
+    <where>
+        <if test="manageUserRule.userId != null and manageUserRule.userId.trim() != ''">
+          AND USER_ID = #{manageUserRule.userId}
+        </if>
+        <if test="manageUserRule.userNo != null and manageUserRule.userNo.trim() != ''">
+          AND USER_NO = #{manageUserRule.userNo}
+        </if>
+        <if test="manageUserRule.userLoginNo != null and manageUserRule.userLoginNo.trim() != ''">
+          AND USER_LOGIN_NO = #{manageUserRule.userLoginNo}
+        </if>
+        <if test="manageUserRule.userName != null and manageUserRule.userName.trim() != ''">
+          AND USER_NAME = #{manageUserRule.userName}
+        </if>
+        <if test="manageUserRule.roleId != null and manageUserRule.roleId.trim() != ''">
+          AND ROLE_ID = #{manageUserRule.roleId}
+        </if>
+        <if test="manageUserRule.roleName != null and manageUserRule.roleName.trim() != ''">
+          AND ROLE_NAME = #{manageUserRule.roleName}
+        </if>
+    </where>
+  </select>
+    <!--新增用户和角色关联表-->
+    <insert id="addUserRule" parameterType="com.yjc.system.admin.entity.ManageUserRule">
+        INSERT INTO MANAGE_USER_RULE
+        (USER_ID,
+        USER_NO,
+        USER_LOGIN_NO,
+        USER_NAME,
+        ROLE_ID,
+        ROLE_NAME
+        )
+        VALUES(
+        #{manageUserRule.userId},
+        #{manageUserRule.userNo},
+        #{manageUserRule.userLoginNo},
+        #{manageUserRule.userName},
+        #{manageUserRule.roleId},
+        #{manageUserRule.roleName}
+        )
+    </insert>
+
+
+
+</mapper>

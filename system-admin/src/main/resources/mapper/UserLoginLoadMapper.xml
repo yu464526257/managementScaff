@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--USER_LOGIN_LOAD-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.UserLoginLoadMapper">
+
+  <resultMap id="userLoginLoadMap" type="com.yjc.system.admin.entity.UserLoginLoad">
+        <id property="id" column="ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="userNo" column="USER_NO"/>
+        <result property="loginIp" column="LOGIN_IP"/>
+        <result property="loginTime" column="LOGIN_TIME"/>
+  </resultMap>
+
+  <!--userLoginLoad简单分页查询-->
+  <select id="getUserLoginLoadPage" resultMap="userLoginLoadMap">
+    SELECT
+        ID,
+        USER_NAME,
+        USER_NO,
+        LOGIN_IP,
+        LOGIN_TIME
+    FROM USER_LOGIN_LOAD
+    <where>
+        <if test="userLoginLoad.id != null and userLoginLoad.id.trim() != ''">
+          AND ID = #{userLoginLoad.id}
+        </if>
+        <if test="userLoginLoad.userName != null and userLoginLoad.userName.trim() != ''">
+          AND USER_NAME = #{userLoginLoad.userName}
+        </if>
+        <if test="userLoginLoad.userNo != null and userLoginLoad.userNo.trim() != ''">
+          AND USER_NO = #{userLoginLoad.userNo}
+        </if>
+        <if test="userLoginLoad.loginIp != null and userLoginLoad.loginIp.trim() != ''">
+          AND LOGIN_IP = #{userLoginLoad.loginIp}
+        </if>
+        <if test="userLoginLoad.loginTime != null and userLoginLoad.loginTime.trim() != ''">
+          AND LOGIN_TIME = #{userLoginLoad.loginTime}
+        </if>
+    </where>
+  </select>
+
+
+
+</mapper>

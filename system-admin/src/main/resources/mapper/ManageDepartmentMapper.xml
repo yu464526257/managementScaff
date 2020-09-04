@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_DEPARTMENT-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageDepartmentMapper">
+
+  <resultMap id="manageDepartmentMap" type="com.yjc.system.admin.entity.ManageDepartment">
+        <id property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="no" column="NO"/>
+        <result property="dataDm" column="DATA_DM"/>
+        <result property="px" column="PX"/>
+        <result property="creationUserId" column="CREATION_USER_ID"/>
+        <result property="creationTime" column="CREATION_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="updateUserId" column="UPDATE_USER_ID"/>
+        <result property="remark" column="REMARK"/>
+        <result property="isValid" column="IS_VALID"/>
+        <result property="levels" column="LEVELS"/>
+        <result property="platformId" column="PLATFORM_ID"/>
+        <result property="type" column="TYPE"/>
+  </resultMap>
+
+  <!--manageDepartment简单分页查询-->
+  <select id="getManageDepartmentPage" resultMap="manageDepartmentMap">
+    SELECT
+        ID,
+        NAME,
+        NO,
+        DATA_DM,
+        PX,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        UPDATE_TIME,
+        UPDATE_USER_ID,
+        REMARK,
+        IS_VALID,
+        LEVELS,
+        PLATFORM_ID,
+        TYPE
+    FROM MANAGE_DEPARTMENT
+    <where>
+        <if test="manageDepartment.id != null and manageDepartment.id.trim() != ''">
+          AND ID = #{manageDepartment.id}
+        </if>
+        <if test="manageDepartment.name != null and manageDepartment.name.trim() != ''">
+          AND NAME = #{manageDepartment.name}
+        </if>
+        <if test="manageDepartment.no != null and manageDepartment.no.trim() != ''">
+          AND NO = #{manageDepartment.no}
+        </if>
+        <if test="manageDepartment.dataDm != null and manageDepartment.dataDm.trim() != ''">
+          AND DATA_DM = #{manageDepartment.dataDm}
+        </if>
+        <if test="manageDepartment.px != null and manageDepartment.px.trim() != ''">
+          AND PX = #{manageDepartment.px}
+        </if>
+        <if test="manageDepartment.creationUserId != null and manageDepartment.creationUserId.trim() != ''">
+          AND CREATION_USER_ID = #{manageDepartment.creationUserId}
+        </if>
+        <if test="manageDepartment.creationTime != null and manageDepartment.creationTime.trim() != ''">
+          AND CREATION_TIME = #{manageDepartment.creationTime}
+        </if>
+        <if test="manageDepartment.updateTime != null and manageDepartment.updateTime.trim() != ''">
+          AND UPDATE_TIME = #{manageDepartment.updateTime}
+        </if>
+        <if test="manageDepartment.updateUserId != null and manageDepartment.updateUserId.trim() != ''">
+          AND UPDATE_USER_ID = #{manageDepartment.updateUserId}
+        </if>
+        <if test="manageDepartment.remark != null and manageDepartment.remark.trim() != ''">
+          AND REMARK = #{manageDepartment.remark}
+        </if>
+        <if test="manageDepartment.isValid != null and manageDepartment.isValid.trim() != ''">
+          AND IS_VALID = #{manageDepartment.isValid}
+        </if>
+        <if test="manageDepartment.levels != null and manageDepartment.levels.trim() != ''">
+          AND LEVELS = #{manageDepartment.levels}
+        </if>
+        <if test="manageDepartment.platformId != null and manageDepartment.platformId.trim() != ''">
+          AND PLATFORM_ID = #{manageDepartment.platformId}
+        </if>
+        <if test="manageDepartment.type != null and manageDepartment.type.trim() != ''">
+          AND TYPE = #{manageDepartment.type}
+        </if>
+    </where>
+  </select>
+
+
+
+</mapper>

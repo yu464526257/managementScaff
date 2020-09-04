@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_USER-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageUserMapper">
+
+  <resultMap id="manageUserMap" type="com.yjc.system.admin.entity.ManageUser">
+        <id property="id" column="ID"/>
+        <result property="userNo" column="USER_NO"/>
+        <result property="userLoginNo" column="USER_LOGIN_NO"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="sex" column="SEX"/>
+        <result property="creationUserId" column="CREATION_USER_ID"/>
+        <result property="creationTime" column="CREATION_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="updateUserId" column="UPDATE_USER_ID"/>
+        <result property="remark" column="REMARK"/>
+        <result property="isValid" column="IS_VALID"/>
+        <result property="roleId" column="ROLE_ID"/>
+        <result property="departmentId" column="DEPARTMENT_ID"/>
+        <result property="platformId" column="PLATFORM_ID"/>
+        <result property="photoId" column="PHOTO_ID"/>
+  </resultMap>
+
+  <!--manageUser简单分页查询-->
+  <select id="getManageUserPage" resultMap="manageUserMap">
+    SELECT
+        ID,
+        USER_NO,
+        USER_LOGIN_NO,
+        PASSWORD,
+        USER_NAME,
+        SEX,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        UPDATE_TIME,
+        UPDATE_USER_ID,
+        REMARK,
+        IS_VALID,
+        ROLE_ID,
+        DEPARTMENT_ID,
+        PLATFORM_ID,
+      PHOTO_ID
+    FROM MANAGE_USER
+    <where>
+        <if test="manageUser.id != null and manageUser.id.trim() != ''">
+          AND ID = #{manageUser.id}
+        </if>
+        <if test="manageUser.userNo != null and manageUser.userNo.trim() != ''">
+          AND USER_NO = #{manageUser.userNo}
+        </if>
+        <if test="manageUser.userLoginNo != null and manageUser.userLoginNo.trim() != ''">
+          AND USER_LOGIN_NO = #{manageUser.userLoginNo}
+        </if>
+        <if test="manageUser.password != null and manageUser.password.trim() != ''">
+          AND PASSWORD = #{manageUser.password}
+        </if>
+        <if test="manageUser.userName != null and manageUser.userName.trim() != ''">
+          AND USER_NAME = #{manageUser.userName}
+        </if>
+        <if test="manageUser.sex != null and manageUser.sex.trim() != ''">
+          AND SEX = #{manageUser.sex}
+        </if>
+        <if test="manageUser.creationUserId != null and manageUser.creationUserId.trim() != ''">
+          AND CREATION_USER_ID = #{manageUser.creationUserId}
+        </if>
+        <if test="manageUser.creationTime != null and manageUser.creationTime.trim() != ''">
+          AND CREATION_TIME = #{manageUser.creationTime}
+        </if>
+        <if test="manageUser.updateTime != null and manageUser.updateTime.trim() != ''">
+          AND UPDATE_TIME = #{manageUser.updateTime}
+        </if>
+        <if test="manageUser.updateUserId != null and manageUser.updateUserId.trim() != ''">
+          AND UPDATE_USER_ID = #{manageUser.updateUserId}
+        </if>
+        <if test="manageUser.remark != null and manageUser.remark.trim() != ''">
+          AND REMARK = #{manageUser.remark}
+        </if>
+        <if test="manageUser.isValid != null and manageUser.isValid.trim() != ''">
+          AND IS_VALID = #{manageUser.isValid}
+        </if>
+        <if test="manageUser.roleId != null and manageUser.roleId.trim() != ''">
+          AND ROLE_ID = #{manageUser.roleId}
+        </if>
+        <if test="manageUser.departmentId != null and manageUser.departmentId.trim() != ''">
+          AND DEPARTMENT_ID = #{manageUser.departmentId}
+        </if>
+        <if test="manageUser.platformId != null and manageUser.platformId.trim() != ''">
+          AND PLATFORM_ID = #{manageUser.platformId}
+        </if>
+    </where>
+  </select>
+
+    <insert id="saveUserOld" >
+        insert into MANAGE_USER(
+         ID,
+        USER_NO,
+        USER_LOGIN_NO,
+        PASSWORD,
+        USER_NAME,
+        SEX,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        REMARK,
+        IS_VALID,
+        ROLE_ID,
+        DEPARTMENT_ID,
+        PLATFORM_ID,
+        PHOTO_ID
+        ) values (
+        #{user.id},
+	    seq_user_no.nextval,
+        #{user.userLoginNo},
+        #{user.password},
+        #{user.userName},
+        #{user.sex},
+        'admin',
+        sysdate,
+        '',
+        0,
+        #{user.roleId},
+        #{user.departmentId},
+        #{user.platformId},
+        NULL
+        )
+    </insert>
+
+    <insert id="addNewUser">
+        insert into MANAGE_USER(
+        ID,
+       USER_NO,
+       USER_LOGIN_NO,
+       PASSWORD,
+       USER_NAME,
+        SEX,
+      <if test="user.creationUserId != null and user.creationUserId !=''">
+       CREATION_USER_ID,
+       </if>
+       CREATION_TIME,
+       REMARK,
+       IS_VALID,
+       <if test="user.roleId != null and user.roleId !=''">
+       ROLE_ID,
+       </if>
+       DEPARTMENT_ID,
+        <if test="user.photoId != null and user.photoId !=''">
+            PHOTO_ID,
+        </if>
+        PLATFORM_ID
+        ) values (
+        #{user.id},
+	    seq_user_no.nextval,
+        #{user.userLoginNo},
+        #{user.password},
+        #{user.userName},
+        #{user.sex},
+        <if test="user.creationUserId != null and user.creationUserId !=''">
+        #{user.creationUserId},
+        </if>
+        sysdate,
+        '',
+        0,
+        <if test="user.roleId != null and user.roleId !=''">
+        #{user.roleId},
+        </if>
+        #{user.departmentId},
+        <if test="user.photoId != null and user.photoId !=''">
+            #{user.photoId},
+        </if>
+        #{user.platformId}
+        )
+    </insert>
+
+    <insert id="setOldUserHis">
+         insert into MANAGE_USER_HIS(
+         ID,
+        USER_NO,
+        USER_LOGIN_NO,
+        PASSWORD,
+        USER_NAME,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        REMARK,
+        IS_VALID,
+        ROLE_ID,
+        DEPARTMENT_ID,
+        PLATFORM_ID,
+        PHOTO_ID
+        ) select
+        #{user.hisId},
+        USER_NO,
+        USER_LOGIN_NO,
+        PASSWORD,
+        USER_NAME,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        REMARK,
+        IS_VALID,
+        ROLE_ID,
+        DEPARTMENT_ID,
+        PLATFORM_ID,
+        PHOTO_ID from MANAGE_USER where id=#{user.id} and IS_VALID !=1
+    </insert>
+
+
+    <update id="updateUser">
+        update MANAGE_USER set
+        <if test="user.userName != null and user.userName !=''">
+        USER_NAME =#{user.userName},
+        </if>
+        <if test="user.roleId != null and user.roleId !=''">
+            ROLE_ID = #{user.roleId},
+        </if>
+        <if test="user.photoId != null and user.photoId !=''">
+            PHOTO_ID = #{user.photoId},
+        </if>
+        <if test="user.departmentId != null and user.departmentId !=''">
+            DEPARTMENT_ID = #{user.departmentId},
+        </if>
+        <if test="user.platformId != null and user.platformId !=''">
+            PLATFORM_ID = #{user.platformId},
+        </if>
+        REMARK  = #{user.remark},
+        UPDATE_TIME = sysdate,
+        <if test="user.updateUserId != null and user.updateUserId !=''">
+        UPDATE_USER_ID = #{user.updateUserId}
+        </if>
+        where ID=#{user.id} and USER_NO=#{user.userNo} and IS_VALID !=1
+    </update>
+
+
+    <update id="updateUserPassword" >
+        update MANAGE_USER set
+        <if test="user.password != null and user.password !=''">
+            PASSWORD = #{user.password}
+        </if>
+        where  ID=#{user.id} and USER_NO=#{user.userNo} and IS_VALID !=1
+    </update>
+
+<!--    &lt;!&ndash;查询全部用户&ndash;&gt;-->
+<!--    <select id="getManageUser" resultType="com.yjc.system.admin.dto.UserDto" parameterType="ManageUser">-->
+<!--        SELECT ID,USER_NO,USER_LOGIN_NO,USER_NAME,SEX,ROLE_ID FROM MANAGE_USER-->
+<!--        <where>-->
+<!--            <if test="manageUser.id != null and manageUser.id!=''">-->
+<!--                AND ID = #{manageUser.id}-->
+<!--            </if>-->
+<!--            <if test="manageUser.userNo != null and manageUser.userNo!= ''">-->
+<!--                AND USER_NO = #{manageUser.userNo}-->
+<!--            </if>-->
+<!--            <if test="manageUser.userLoginNo != null and manageUser.userLoginNo!= ''">-->
+<!--                AND USER_LOGIN_NO = #{manageUser.userLoginNo}-->
+<!--            </if>-->
+<!--            <if test="manageUser.password != null and manageUser.password!= ''">-->
+<!--                AND PASSWORD = #{manageUser.password}-->
+<!--            </if>-->
+<!--            <if test="manageUser.userName != null and manageUser.userName!= ''">-->
+<!--                AND USER_NAME LIKE CONCAT(CONCAT('%',#{manageUser.userName}),'%')-->
+<!--            </if>-->
+<!--            <if test="manageUser.sex != null and manageUser.sex!= ''">-->
+<!--                AND SEX = #{manageUser.sex}-->
+<!--            </if>-->
+<!--            <if test="manageUser.creationUserId != null and manageUser.creationUserId!= ''">-->
+<!--                AND CREATION_USER_ID = #{manageUser.creationUserId}-->
+<!--            </if>-->
+<!--            <if test="manageUser.creationTime != null and manageUser.creationTime!= ''">-->
+<!--                AND CREATION_TIME = #{manageUser.creationTime}-->
+<!--            </if>-->
+<!--            <if test="manageUser.updateTime != null and manageUser.updateTime!= ''">-->
+<!--                AND UPDATE_TIME = #{manageUser.updateTime}-->
+<!--            </if>-->
+<!--            <if test="manageUser.updateUserId != null and manageUser.updateUserId!= ''">-->
+<!--                AND UPDATE_USER_ID = #{manageUser.updateUserId}-->
+<!--            </if>-->
+<!--            <if test="manageUser.remark != null and manageUser.remark!= ''">-->
+<!--                AND REMARK = #{manageUser.remark}-->
+<!--            </if>-->
+<!--            <if test="manageUser.isValid != null and manageUser.isValid!= ''">-->
+<!--                AND IS_VALID = #{manageUser.isValid}-->
+<!--            </if>-->
+<!--            <if test="manageUser.roleId != null and manageUser.roleId!= ''">-->
+<!--                AND ROLE_ID = #{manageUser.roleId}-->
+<!--            </if>-->
+<!--            <if test="manageUser.departmentId != null and manageUser.departmentId!= ''">-->
+<!--                AND DEPARTMENT_ID = #{manageUser.departmentId}-->
+<!--            </if>-->
+<!--            <if test="manageUser.platformId != null and manageUser.platformId!= ''">-->
+<!--                AND PLATFORM_ID = #{manageUser.platformId}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+    <!--查询全部用户-->
+    <select id="getManageUser" resultType="com.yjc.system.admin.dto.UserDto">
+        SELECT ID,USER_NO,USER_LOGIN_NO,USER_NAME,SEX,ROLE_ID FROM MANAGE_USER
+    </select>
+
+
+
+    <select id="getManageUserById" resultType="com.yjc.system.admin.entity.ManageUser">
+        SELECT ID,USER_NO,USER_LOGIN_NO,PASSWORD,USER_NAME,SEX FROM MANAGE_USER WHERE ID=#{userId} AND IS_VALID=0
+    </select>
+
+
+</mapper>

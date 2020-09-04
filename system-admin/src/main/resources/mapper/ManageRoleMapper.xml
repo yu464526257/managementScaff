@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MANAGE_ROLE-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yjc.system.admin.dao.ManageRoleMapper">
+
+  <resultMap id="manageRoleMap" type="com.yjc.system.admin.dto.ManageRoleDto">
+        <id property="roleId" column="ROLE_ID"/>
+        <result property="roleName" column="ROLE_NAME"/>
+        <result property="roleKey" column="ROLE_KEY"/>
+        <result property="roleStatusCode" column="ROLE_STATUS_CODE"/>
+        <result property="positionIndex" column="POSITION_INDEX"/>
+        <result property="roleLevel" column="ROLE_LEVEL"/>
+        <result property="isEdited" column="IS_EDITED"/>
+        <result property="creationUserId" column="CREATION_USER_ID"/>
+        <result property="creationTime" column="CREATION_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="updateUserId" column="UPDATE_USER_ID"/>
+        <result property="remark" column="REMARK"/>
+        <result property="isValid" column="IS_VALID"/>
+  </resultMap>
+
+  <!--manageRole简单分页查询-->
+  <select id="getManageRolePage" resultMap="manageRoleMap">
+    SELECT
+        ROLE_ID,
+        ROLE_NAME,
+        ROLE_KEY,
+        ROLE_STATUS_CODE,
+        POSITION_INDEX,
+        ROLE_LEVEL,
+        IS_EDITED,
+        CREATION_USER_ID,
+        CREATION_TIME,
+        UPDATE_TIME,
+        UPDATE_USER_ID,
+        REMARK,
+        IS_VALID
+    FROM MANAGE_ROLE
+    <where>
+        <if test="manageRole.roleId != null and manageRole.roleId != ''">
+          AND ROLE_ID = #{manageRole.roleId}
+        </if>
+        <if test="manageRole.roleName != null and manageRole.roleName != ''">
+          AND ROLE_NAME = #{manageRole.roleName}
+        </if>
+        <if test="manageRole.roleKey != null and manageRole.roleKey != ''">
+          AND ROLE_KEY = #{manageRole.roleKey}
+        </if>
+        <if test="manageRole.roleStatusCode != null and manageRole.roleStatusCode != ''">
+          AND ROLE_STATUS_CODE = #{manageRole.roleStatusCode}
+        </if>
+        <if test="manageRole.positionIndex != null and manageRole.positionIndex != ''">
+          AND POSITION_INDEX = #{manageRole.positionIndex}
+        </if>
+        <if test="manageRole.roleLevel != null and manageRole.roleLevel != ''">
+          AND ROLE_LEVEL = #{manageRole.roleLevel}
+        </if>
+        <if test="manageRole.isEdited != null and manageRole.isEdited != ''">
+          AND IS_EDITED = #{manageRole.isEdited}
+        </if>
+        <if test="manageRole.creationUserId != null and manageRole.creationUserId != ''">
+          AND CREATION_USER_ID = #{manageRole.creationUserId}
+        </if>
+        <if test="manageRole.creationTime != null and manageRole.creationTime != ''">
+          AND CREATION_TIME = #{manageRole.creationTime}
+        </if>
+        <if test="manageRole.updateTime != null and manageRole.updateTime != ''">
+          AND UPDATE_TIME = #{manageRole.updateTime}
+        </if>
+        <if test="manageRole.updateUserId != null and manageRole.updateUserId != ''">
+          AND UPDATE_USER_ID = #{manageRole.updateUserId}
+        </if>
+        <if test="manageRole.remark != null and manageRole.remark != ''">
+          AND REMARK = #{manageRole.remark}
+        </if>
+          AND IS_VALID = 0
+    </where>
+  </select>
+    <!--查询全部角色-->
+    <select id="getManageRoleList" resultType="com.yjc.system.admin.entity.ManageRole">
+        select * from MANAGE_ROLE where 1=1  AND IS_VALID=0
+    </select>
+    <!--根据角色编号查询角色信息-->
+    <select id="getManageRoleById" resultMap="manageRoleMap">
+        select * from MANAGE_ROLE where ROLE_ID=#{roleId}  AND IS_VALID=0
+    </select>
+    <!--新增用户角色-->
+    <insert id="addManageRole" parameterType="com.yjc.system.admin.entity.ManageRole">
+        INSERT INTO MANAGE_ROLE(
+        <if test="manageRole.roleId!=null and manageRole.roleId!=''">
+            ROLE_ID,
+        </if>
+        <if test="manageRole.roleName!=null and manageRole.roleName!=''">
+            ROLE_NAME,
+        </if>
+        <if test="manageRole.roleKey!=null and manageRole.roleKey!=''">
+            ROLE_KEY,
+        </if>
+            ROLE_STATUS_CODE,
+        <if test="manageRole.positionIndex!=null and manageRole.positionIndex!=''">
+            POSITION_INDEX,
+        </if>
+        <if test="manageRole.roleLevel!=null and manageRole.roleLevel!=''">
+            ROLE_LEVEL,
+        </if>
+        <if test="manageRole.isEdited!=null and manageRole.isEdited!=''">
+            IS_EDITED,
+        </if>
+        <if test="manageRole.creationUserId!=null and manageRole.creationUserId!=''">
+            CREATION_USER_ID,
+        </if>
+        CREATION_TIME,
+        <if test="manageRole.remark!=null and manageRole.remark!=''">
+            REMARK,
+        </if>
+        IS_VALID
+        ) VALUES(
+        <if test="manageRole.roleId!=null and manageRole.roleId!=''">
+            #{manageRole.roleId},
+        </if>
+        <if test="manageRole.roleName!=null and manageRole.roleName!=''">
+            #{manageRole.roleName},
+        </if>
+        <if test="manageRole.roleKey!=null and manageRole.roleKey!=''">
+            #{manageRole.roleKey},
+        </if>
+            0,
+        <if test="manageRole.positionIndex!=null and manageRole.positionIndex!=''">
+            #{manageRole.positionIndex},
+        </if>
+        <if test="manageRole.roleLevel!=null and manageRole.roleLevel!=''">
+            #{manageRole.roleLevel},
+        </if>
+        <if test="manageRole.isEdited!=null and manageRole.isEdited!=''">
+            #{manageRole.isEdited},
+        </if>
+        <if test="manageRole.creationUserId!=null and manageRole.creationUserId!=''">
+            #{manageRole.creationUserId},
+        </if>
+       SYSDATE, --  oracle写法
+--             now(),
+        <if test="manageRole.remark!=null and manageRole.remark!=''">
+            #{manageRole.remark},
+        </if>
+        0
+        )
+    </insert>
+    <!--修改角色信息-->
+    <update id="updateManageRole" parameterType="com.yjc.system.admin.entity.ManageRole">
+        UPDATE MANAGE_ROLE SET
+        <trim>
+            <if test="manageRole.roleName!=null and manageRole.roleName!=''">
+                ROLE_NAME=#{manageRole.roleName},
+            </if>
+            <if test="manageRole.roleKey!=null and manageRole.roleKey!=''">
+                ROLE_KEY=#{manageRole.roleKey},
+            </if>
+            <if test="manageRole.roleStatusCode!=null and manageRole.roleStatusCode!=''">
+                ROLE_STATUS_CODE=#{manageRole.roleStatusCode},
+            </if>
+            <if test="manageRole.positionIndex!=null and manageRole.positionIndex!=''">
+                POSITION_INDEX=#{manageRole.positionIndex},
+            </if>
+            <if test="manageRole.roleLevel!=null and manageRole.roleLevel!=''">
+                ROLE_LEVEL=#{manageRole.roleLevel},
+            </if>
+            <if test="manageRole.isEdited!=null and manageRole.isEdited!=''">
+                IS_EDITED=#{manageRole.isEdited},
+            </if>
+               UPDATE_TIME=SYSDATE, -- oracle写法
+--             UPDATE_TIME=now(),
+            <if test="manageRole.updateUserId!=null and manageRole.updateUserId!=''">
+                UPDATE_USER_ID=#{manageRole.updateUserId},
+            </if>
+            <if test="manageRole.remark!=null and manageRole.remark!=''">
+                REMARK=#{manageRole.remark},
+            </if>
+                IS_VALID=0
+        </trim>
+        WHERE
+        ROLE_ID=#{manageRole.roleId}
+    </update>
+    <!--删除角色-->
+    <update id="deleteManageRole">
+        UPDATE MANAGE_ROLE SET
+        <trim>
+        IS_VALID=1 ,
+        <if test="updateUserId!=null and updateUserId!=''">
+            UPDATE_USER_ID=#{updateUserId},
+        </if>
+        UPDATE_TIME=SYSDATE
+--         UPDATE_TIME=now()
+        </trim>
+        WHERE ROLE_ID=#{roleId}
+    </update>
+
+</mapper>

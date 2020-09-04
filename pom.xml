@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.1.RELEASE</version>
+        <relativePath>pom.xml</relativePath>
+    </parent>
+    <groupId>com.yjc.system</groupId>
+    <artifactId>system</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>managementSaleStock</name>
+    <packaging>pom</packaging>  <!--父模块打包类型必须为pom-->
+    <description>Demo project for Spring Boot</description>
+
+    <modules>
+        <module>system-admin</module>
+        <module>system-commen</module>
+        <module>system-api</module>
+    </modules>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <org-springframework-boot>2.0.1.RELEASE</org-springframework-boot>
+<!--
+        <org-springframework-boot>2.1.6.RELEASE</org-springframework-boot>
+-->
+        <org-projectlombo>1.18.10</org-projectlombo>
+        <mysql-connector-java>5.1.6</mysql-connector-java>
+        <org-mybatis-spring-boot>1.3.2</org-mybatis-spring-boot>
+        <com-alibaba-druid>1.1.9</com-alibaba-druid>
+        <org-apache-velocity>2.0</org-apache-velocity>
+        <org-freemarker>2.3.23</org-freemarker>
+        <com-oracle>11.2.0.4.0-atlassian-hosted</com-oracle>
+        <com-alibaba-fastjson>1.2.53</com-alibaba-fastjson>
+        <org-apache-commons>3.4</org-apache-commons>
+        <cn-hutool>5.3.7</cn-hutool>
+        <io-springfox>2.9.2</io-springfox>
+
+        <com-aliyun-oss>2.4.0</com-aliyun-oss>
+        <commons-configuration>1.10</commons-configuration>
+        <org-apache-poi>3.16</org-apache-poi>
+        <fr-opensagres-xdocreport>1.0.5</fr-opensagres-xdocreport>
+        <ch-ethz-ganymed>262</ch-ethz-ganymed>
+        <com-jcraft>0.1.55</com-jcraft>
+        <com-google-code-gson>2.8.5</com-google-code-gson>
+        <org-apache-commons-pool2>2.4.2</org-apache-commons-pool2>
+<!--
+        <org-apache-commons-pool2>2.0</org-apache-commons-pool2>
+-->
+        <activiti-spring>5.22.0</activiti-spring>
+
+
+
+    </properties>
+
+
+
+    <dependencyManagement>
+            <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${org-springframework-boot}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${org-springframework-boot}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${org-springframework-boot}</version>
+            </dependency>
+
+
+            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${org-springframework-boot}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${org-springframework-boot}</version>
+            </dependency>
+
+
+            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org-projectlombo}</version>
+
+                <scope>provided</scope>
+            </dependency>
+
+
+            <!-- mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${org-mybatis-spring-boot}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${com-alibaba-druid}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${org-apache-velocity}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.0-gamma</version>
+            </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-test</artifactId>
+                    <version>${org-springframework-boot}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                    <version>${org-springframework-boot}</version>
+                </dependency>
+
+
+                <!-- 模板引擎，需要指定 mpg.setTemplateEngine(new FreemarkerTemplateEngine()); -->
+                <dependency>
+                    <groupId>org.freemarker</groupId>
+                    <artifactId>freemarker</artifactId>
+                    <version>${org-freemarker}</version>
+                </dependency>
+
+                <!--oracle-->
+                <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>ojdbc6</artifactId>
+                    <version>${com-oracle}</version>
+                </dependency>
+
+                <!--alibaba-json-->
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                    <version>${com-alibaba-fastjson}</version>
+                </dependency>
+
+
+                <!--apache-stringUtils-->
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                    <version>${org-apache-commons}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.hutool</groupId>
+                    <artifactId>hutool-all</artifactId>
+                    <version>${cn-hutool}</version>
+                </dependency>
+
+
+                <!--swagger2-->
+                <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-core</artifactId>
+                    <version>${io-springfox}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger2</artifactId>
+                    <version>${io-springfox}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger-ui</artifactId>
+                    <version>${io-springfox}</version>
+                </dependency>
+
+                <!--文件生成-->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-configuration-processor</artifactId>
+                    <version>${org-springframework-boot}</version>
+                    <optional>true</optional>
+                </dependency>
+
+
+                <dependency>
+                    <groupId>com.aliyun.oss</groupId>
+                    <artifactId>aliyun-sdk-oss</artifactId>
+                    <version>${com-aliyun-oss}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>commons-configuration</groupId>
+                    <artifactId>commons-configuration</artifactId>
+                    <version>${commons-configuration}</version>
+                </dependency>
+
+
+                <!--wordTOHtml-->
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                    <version>${org-apache-poi}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-scratchpad</artifactId>
+                    <version>${org-apache-poi}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                    <version>${org-apache-poi}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-schemas</artifactId>
+                    <version>${org-apache-poi}</version>
+                </dependency>
+
+
+                <dependency>
+                    <groupId>fr.opensagres.xdocreport</groupId>
+                    <artifactId>fr.opensagres.xdocreport.document</artifactId>
+                    <version>${fr-opensagres-xdocreport}</version>
+                </dependency>
+                <dependency>
+                    <groupId>fr.opensagres.xdocreport</groupId>
+                    <artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
+                    <version>${fr-opensagres-xdocreport}</version>
+                </dependency>
+
+                <!--fileUpLoad-->
+                <dependency>
+                    <groupId>ch.ethz.ganymed</groupId>
+                    <artifactId>ganymed-ssh2</artifactId>
+                    <version>${ch-ethz-ganymed}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.jcraft</groupId>
+                    <artifactId>jsch</artifactId>
+                    <version>${com-jcraft}</version>
+                </dependency>
+
+
+                <!--redis-->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                    <version>${org-springframework-boot}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-pool2</artifactId>
+                    <version>${org-apache-commons-pool2}</version>
+                </dependency>
+
+                <!--gooljson-->
+                <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+                <dependency>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                    <version>${com-google-code-gson}</version>
+                </dependency>
+
+                <!--&lt;!&ndash;输入参数校验&ndash;&gt;-->
+                <!--<dependency>-->
+                <!--<groupId>javax.validation</groupId>-->
+                <!--<artifactId>validation-api</artifactId>-->
+                <!--<version>1.1.0.Final</version>-->
+                <!--</dependency>-->
+                <dependency>
+                    <groupId>org.activiti</groupId>
+                    <artifactId>activiti-spring-boot-starter-basic</artifactId>
+                    <version>${activiti-spring}</version>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring -->
+                <dependency>
+                    <groupId>org.activiti</groupId>
+                    <artifactId>activiti-spring</artifactId>
+                    <version>${activiti-spring}</version>
+                </dependency>
+
+
+                <dependency>
+                    <groupId>org.activiti</groupId>
+                    <artifactId>activiti-engine</artifactId>
+                    <version>${activiti-spring}</version>
+                </dependency>
+                <!--<dependency>-->
+                <!--<groupId>org.activiti</groupId>-->
+                <!--<artifactId>activiti5-engine</artifactId>-->
+                <!--<version>${activiti-spring}</version>-->
+                <!--</dependency>-->
+
+                <dependency>
+                    <groupId>org.activiti</groupId>
+                    <artifactId>activiti-modeler</artifactId>
+                    <version>${activiti-spring}</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.activiti</groupId>
+                            <artifactId>activiti-bpmn-model</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+
+
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<mainClass>com.yidi.system.admin.SystemAdminApplication</mainClass>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.21.0</version>-->
+                <!--<configuration>-->
+                    <!--<skipTests>true</skipTests>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/java</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.xml</include>-->
+                <!--</includes>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.xml</include>-->
+                    <!--<include>**/logback.xml</include>-->
+                    <!--<include>**/*.properties</include>-->
+                    <!--<include>**/*.processes</include>-->
+                    <!--<include>**/*.yml</include>-->
+                <!--</includes>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
+        <!--</resources>-->
+    <!--</build>-->
+
+</project>
